@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm">
+<form [formGroup]="registerForm" (ngSubmit)="enviarUsuario()">
     <p-card header="Registrarse" [style]="{ width: '360px'}">
         <div class="field">
             <input type="text" pInputText formControlName = "fullname" placeholder="Nombre completo" class="w-full"/>
@@ -22,7 +22,7 @@
         <div class="field">
             <p-password formControlName="confirmPassword" name= "confirmPassword" [toggleMask]="true" placeholder="Confirmar contraseña" ></p-password>
         </div>
-        <p-button label="Registrar" styleClass="w-full"></p-button>
+        <p-button type="submit" label="Registrar" styleClass="w-full"></p-button>
 
         <div class="mt-2">
             ¿Si tienes cuenta? <a routerLink="/login">Ingresar</a>
