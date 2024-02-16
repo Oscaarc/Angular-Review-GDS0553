@@ -3,10 +3,10 @@
 > git clone https://github.com/Oscaarc/Angular-Review-GDS0553.git
 
 ## Ingresar al directorio de la carpeta
-> cd orc-login
+> cd orc-login-gds0553
 
 ## Instalar modulos
-Instalar node.js
+> npm i
 > npm install -g @angular/cli
 
 ## Instalar Json - Server
