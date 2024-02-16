@@ -17,7 +17,7 @@ export class LoginComponent {
     password : ['', Validators.required]
   });
 
-  constructor (private fb : FormBuilder, private au : AuthService, private ms : MessageService,private router : Router) { };
+  constructor (private fb : FormBuilder, private au : AuthService, private ms : MessageService, private router : Router) { };
 
   get email() {
     return this.loginForm.controls['email']

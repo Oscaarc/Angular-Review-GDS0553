@@ -6,6 +6,7 @@ import { response } from 'express';
 import { MessageService } from 'primeng/api';
 import { error } from 'node:console';
 import { Router } from '@angular/router';
+import { passwordMatchValidator } from '../../shared/password-match.directives';
 
 @Component({
   selector: 'app-register',
@@ -14,13 +15,13 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   registerForm = this.fb.group({
-    fullname : ['', [Validators.required]],
+    fullname : ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]],
     email : ['', [Validators.required, Validators.email]],
     password : ['', [Validators.required]],
     confirmPassword : ['', [Validators.required]]
   },
   {
-    //validators : passwordMatchValidator;
+    validators : passwordMatchValidator
   });
 
   constructor (private fb : FormBuilder, private authService : AuthService, private messageService : MessageService, private router : Router) { }
@@ -45,24 +46,32 @@ export class RegisterComponent {
     console.log("Envianding")
 
     const datos = {...this.registerForm.value}
-    delete datos.confirmPassword;
+    if (datos.confirmPassword == datos.password) {
+      delete datos.confirmPassword;
 
-    this.authService.registerUser(datos as User).subscribe(
-      response => {
-        this.messageService.add({
-          severity : 'success',
-          summary : 'Registro Exitoso',
-          detail : 'El usuario ha sido registrado con éxito',
-        })
-        this.router.navigate(['/login'])
-      },
-      error => {
-        this.messageService.add({
-          severity : 'error',
-          summary : 'Registro fallido',
-          detail : 'Fallo el registro de usuario'
-        })
-      }
-    )
+      this.authService.registerUser(datos as User).subscribe(
+        response => {
+          this.messageService.add({
+            severity : 'success',
+            summary : 'Registro Exitoso',
+            detail : 'El usuario ha sido registrado con éxito',
+          })
+          this.router.navigate(['/login'])
+        },
+        error => {
+          this.messageService.add({
+            severity : 'error',
+            summary : 'Registro fallido',
+            detail : 'Fallo el registro de usuario'
+          })
+        }
+      )
+    } else {
+      this.messageService.add({
+        severity : 'error',
+        summary : 'Registro fallido',
+        detail : 'Las contraseñas no coinciden'
+      })
+    }
   }
 }
