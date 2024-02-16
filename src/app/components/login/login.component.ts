@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { response } from 'express';
 import { Router } from '@angular/router';
 import { error } from 'console';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
     password : ['', Validators.required]
   });
 
-  constructor (private fb : FormBuilder, private au : AuthService, private router : Router) { };
+  constructor (private fb : FormBuilder, private au : AuthService, private ms : MessageService,private router : Router) { };
 
   get email() {
     return this.loginForm.controls['email']
@@ -36,11 +37,13 @@ export class LoginComponent {
         if (response.length > 0 && response[0].password === password) {
           sessionStorage.setItem("email", email as string)
           console.log("funciona")
+          this.router.navigate(['/home'])
+        } else {
+          this.ms.add({severity : 'error', summary : 'Error', detail : 'Email o contraseña incorrecta'})
         }
-        this.router.navigate(['/home'])
       },
       error => {
-        console.log(error)
+        this.ms.add({severity : 'error', summary : 'Error', detail : 'Email o contraseña incorrecta'})        
       }
     )
   }

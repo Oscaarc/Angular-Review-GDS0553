@@ -5,6 +5,12 @@
       "fullname": "os",
       "email": "o@o",
       "password": "oso"
+    },
+    {
+      "id": "b460",
+      "fullname": "Oscar",
+      "email": "oscar@gmail.com",
+      "password": "oscar"
     }
   ]
 }
