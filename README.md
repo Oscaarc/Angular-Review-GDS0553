@@ -6,7 +6,7 @@
 > cd orc-login-gds0553
 
 ## Instalar modulos
-> npm i
+> npm i <br>
 > npm install -g @angular/cli
 
 ## Instalar Json - Server
